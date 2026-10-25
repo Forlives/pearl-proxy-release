@@ -26,6 +26,12 @@
 
 ---
 
+## 🤖 给 AI / 脚本使用(v0.5.0)
+
+见 [AGENTS.md](AGENTS.md) / [llms.txt](llms.txt)。非交互:`-init -coin KAS -pool host:port`、`-check -json`(退出码 0/1)、`-coins -json`;免登录健康检查 `GET /healthz`。
+
+---
+
 ## ✨ 特性
 
 - 🚀 **加速降延迟** — 就近接入 + 长连接复用,减少握手与抖动
