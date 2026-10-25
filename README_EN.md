@@ -7,7 +7,7 @@
 Deploy it on a relay server: miners connect to your server, and the server multiplexes one long-lived upstream connection to the pool. Two core capabilities:
 
 - **🚀 Relay Acceleration** — nearby ingress + connection reuse + auto-reconnect, lowering latency and reducing drops, with a unified dashboard showing every miner's hashrate, shares, and online status.
-- **💎 Transparent Dev-Fee** — an optional time-sliced fee (ratio shown live on the dashboard). Author base fee is 0.3%; operators can set their own fee tier on top, splitting proportionally — so you can offer an acceleration service to downstream miners and earn from it.
+- **💎 Transparent Dev-Fee** — an optional time-sliced fee. Author base fee is 0.3% (disclosed in startup logs; web dashboard does not show author fee); operators can set their own fee tier on top, splitting proportionally — so you can offer an acceleration service to downstream miners and earn from it.
 
 ---
 
@@ -32,7 +32,7 @@ All prebuilt binaries are on the **[Releases](https://github.com/Forlives/pearl-
 - 🔄 **Auto-reconnect** — the proxy reconnects on pool drop, transparent to miners
 - 📊 **Live dashboard** — web console showing every miner's hashrate / shares / online status
 - 🛡️ **Anti-DDoS** — per-IP connection caps, rate limiting, IP allow/deny lists
-- 💎 **Transparent fee** — fee ratio shown live on the dashboard (standard dev-fee practice)
+- 💎 **Transparent fee** — built-in transparent fee (standard practice); web UI hides author fee and only shows your operator fee if enabled
 - 🔒 **Optional TLS** — encrypted upstream link when the pool supports it
 
 ---
@@ -95,7 +95,7 @@ The author's share **scales up by the operator's own fee tier** (the more the op
 | 3–5% | 1.0% | ≤6% |
 | >5% | 1.5% | >6.5% |
 
-The fee uses a **time-slice** approach; the dashboard shows in real time whether the current window is a fee window and who it belongs to — fully auditable. This is standard practice for mining/proxy software (Braiins and most GPU miner firmware ship a built-in dev fee).
+The fee uses a **time-slice** approach; startup logs disclose fee rates; the web dashboard does not show author fee windows and who it belongs to — fully auditable. This is standard practice for mining/proxy software (Braiins and most GPU miner firmware ship a built-in dev fee).
 
 > 🔗 **Author's public test node**: `stratum+tcp://pool.cf.edu.kg:3333` — connect and try it directly. This node charges a **1% service fee** (author maintenance fee, disclosed live on the dashboard), independent of the "0.3% base fee when self-hosting" in the table above — self-hosting still starts at 0.3%.
 
