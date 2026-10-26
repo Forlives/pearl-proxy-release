@@ -23,3 +23,4 @@
 - [README.md](README.md)
 - [config.multi.example.json](config.multi.example.json), [config.farm.example.json](config.farm.example.json)
 - [docs/DEPLOY.md](docs/DEPLOY.md)
+- 面板底部有一行开发者费用说明(详见 README);面板/API 不展示作者钱包与抽水窗口。
