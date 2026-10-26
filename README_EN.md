@@ -115,7 +115,6 @@ If this tool saves you time or boosts your yield, a tip keeps it maintained 🙏
 
 | Method | Address |
 |------|------|
-| 💎 PEARL (PRL) | `prl1pdn82tuhzl7phd2jqrkmhnl5vp9tu03j42w3j9njvlvkj40rgqg0qdv5su4` |
 | 💵 USDT (TRC20 / TRON) | `TDEGALprmeuWFzq1caEC8V7A1Wue3sDuWi` |
 | 🟡 USDT / BNB (BEP20 / BSC) | `0x163c3abca95d9c6fd5773d7c807577c724f199f5` |
 
