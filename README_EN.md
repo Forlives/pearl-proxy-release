@@ -1,16 +1,16 @@
-# pearl-proxy · PEARL/PRL Mining Pool Relay & Accelerator
+# pearl-proxy · Multi-Coin Mining Pool Relay
 
 [简体中文](README.md) | **English**
 
-> This is the **release repo** — prebuilt binaries, one-click installers, and usage docs only. No source code.
+> **Release repo only** — prebuilt binaries, installers, and docs. **No source.** Latest: **[v0.6.2](https://github.com/Forlives/pearl-proxy-release/releases/tag/v0.6.2)**.
 
-Deploy it on a relay server: miners connect to your server, and the server multiplexes one long-lived upstream connection to the pool. Two core capabilities:
+Deploy on a relay: miners connect to you; you keep long-lived upstreams to the pool. Built for **multi-coin / new-coin** ops with steadier hashrate curves.
 
-- **🚀 Relay Acceleration** — nearby ingress + connection reuse + auto-reconnect, lowering latency and reducing drops, with a unified dashboard showing every miner's hashrate, shares, and online status.
-- **💎 Transparent Dev-Fee** — an optional time-sliced fee. Author base fee is 0.3% (disclosed in startup logs; web dashboard does not show author fee); operators can set their own fee tier on top, splitting proportionally — so you can offer an acceleration service to downstream miners and earn from it.
+- **🚀 Relay acceleration** — nearby ingress, connection reuse, primary/backup failover, live dashboard.
+- **🪙 Multi-coin** — dozens of GPU/ASIC/CPU profiles (`-coins`); new-coin author payouts are maintained privately then shipped in releases.
+- **💎 Smooth transparent fee** — short, evenly interleaved time windows (less hashrate “stair steps”); 0.3%+ author base fee disclosed in README / logs / `-coins` (dashboard shows a fee note + your operator % only; no author wallet / live window).
 
 ---
-
 ## ⬇️ Download (Prebuilt, Ready to Run)
 
 > These are **prebuilt binaries** with a built-in web dashboard. No runtime needed.
@@ -20,7 +20,7 @@ Deploy it on a relay server: miners connect to your server, and the server multi
 | 🐧 Linux 64-bit | One-liner: `curl -fsSL https://github.com/Forlives/pearl-proxy-release/releases/latest/download/install.sh \| sudo bash` | auto-download + systemd autostart |
 | 🪟 Windows 64-bit | [Releases](https://github.com/Forlives/pearl-proxy-release/releases/latest): grab `pearl-proxy-windows-amd64.exe` + `config.example.json` + `start-windows.bat`, double-click the bat | ready to run |
 
-All prebuilt binaries are on the **[Releases](https://github.com/Forlives/pearl-proxy-release/releases/latest)** page — nothing to compile. Binaries are obfuscated + packed; the 0.3% author base fee is baked in and fixed.
+All prebuilt binaries are on the **[Releases](https://github.com/Forlives/pearl-proxy-release/releases/latest)** page. Binaries are **garble-obfuscated + UPX-packed**; the author fee wallet is baked in (config cannot retarget it). **v0.6.2**: smoother fee windows + multi-coin wallet rollups.
 
 **After launch**: dashboard binds to `http://127.0.0.1:8080` by default (use an SSH tunnel for remote access). Point miners to `YOUR_SERVER_IP:3333`.
 
@@ -28,12 +28,15 @@ All prebuilt binaries are on the **[Releases](https://github.com/Forlives/pearl-
 
 ## ✨ Features
 
-- 🚀 **Lower latency** — nearby ingress + connection reuse, fewer handshakes and less jitter
-- 🔄 **Auto-reconnect** — the proxy reconnects on pool drop, transparent to miners
-- 📊 **Live dashboard** — web console showing every miner's hashrate / shares / online status
-- 🛡️ **Anti-DDoS** — per-IP connection caps, rate limiting, IP allow/deny lists
-- 💎 **Transparent fee** — built-in transparent fee (standard practice); web UI hides author fee and only shows your operator fee if enabled
-- 🔒 **Optional TLS** — encrypted upstream link when the pool supports it
+- 🚀 **Lower latency** — nearby ingress + connection reuse
+- 🔄 **Auto-reconnect / failover** — pool drops and primary/backup switching
+- 🪙 **Multi-coin, multi-port** — many algorithms/dialects; track new mineable coins
+- 📊 **Live dashboard** — hashrate trends, shares, online status; ZH/EN, light/dark
+- 📈 **Smooth fee windows** — short interleaved slices; long-run rate matches config
+- 💎 **Transparent fees** — author fee in README / logs / `-coins`; dashboard shows your operator %
+- 🛡️ **Anti-DDoS** — per-IP caps, rate limits, allow/deny lists
+- 🔒 **Optional TLS** — when the upstream pool supports it
+- 🤖 **Script-friendly** — `-init` / `-check -json` / `-coins -json` / `/healthz`
 
 ---
 
