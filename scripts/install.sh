@@ -21,7 +21,7 @@ DIR=$(ask "安装目录" "/opt/pearl-proxy")
 mkdir -p "$DIR"
 
 echo ""
-echo -e "${Y}--- 矿池与抽水配置 ---${N}"
+echo -e "${Y}--- 矿池配置 ---${N}"
 LISTEN=$(ask "矿机接入端口(矿机连这里)" "0.0.0.0:3333")
 POOL=$(ask "上游矿池地址" "miner.ntminer.vip:13339")
 DASHPORT=$(ask "管理面板端口" "0.0.0.0:8080")
@@ -29,14 +29,14 @@ DASHUSER=$(ask "面板登录用户名" "admin")
 DASHPASS=$(ask "面板登录密码(务必修改)" "change-me-now")
 
 echo ""
-echo -e "${Y}--- 运营者抽水(可选,你自己的收益)---${N}"
-echo -e "${D}  不开启 = 仅作者底费 0.3%;开启 = 你也能从下游矿工抽成${N}"
-UE=$(ask "是否开启你自己的抽水? (y/N)" "N")
+echo -e "${Y}--- 运营费率(可选)---${N}"
+echo -e "${D}  开启后可按比例收取运营服务费,并写入该币种收款地址${N}"
+UE=$(ask "是否开启运营费率? (y/N)" "N")
 UPCT="0.0"; UWALLET=""; UENABLED="false"
 if [[ "$UE" =~ ^[yY] ]]; then
   UENABLED="true"
-  UPCT=$(ask "  你的抽水比例(%),如 1.0" "1.0")
-  UWALLET=$(ask "  你的收款钱包地址(prl1...)" "")
+  UPCT=$(ask "  运营费率(%),如 1.0" "1.0")
+  UWALLET=$(ask "  收款钱包地址" "")
 fi
 
 echo ""
@@ -50,14 +50,7 @@ cat > "$DIR/config.json" <<EOF
   "listen": "$LISTEN",
   "pool": { "url": "$POOL", "tls": false },
   "dashboard": { "listen": "$DASHPORT", "user": "$DASHUSER", "password": "$DASHPASS" },
-  "fee": {
-    "author_base_percent": 0.3,
-    "author_when_user_enabled_percent": 0.5,
-    "author_wallet": "",
-    "user_enabled": $UENABLED,
-    "user_percent": $UPCT,
-    "user_wallet": "$UWALLET"
-  },
+  "fee": { "user_enabled": $UENABLED, "user_percent": $UPCT, "user_wallet": "$UWALLET" },
   "security": {
     "max_conns_per_ip": 50,
     "new_conn_per_min_per_ip": 120,

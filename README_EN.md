@@ -1,150 +1,137 @@
-# pearl-proxy · Multi-Coin Mining Pool Relay
+# pearl-proxy
 
-[简体中文](README.md) | **English**
+<p align="center">
+  <img src="assets/hero.jpg" alt="pearl-proxy" width="920"/>
+</p>
 
-> **Release repo only** — prebuilt binaries, installers, and docs. **No source.** Latest: **[v0.6.4](https://github.com/Forlives/pearl-proxy-release/releases/tag/v0.6.4)**.
+<p align="center">
+  <b>Multi-coin mining pool relay · lower latency · live dashboard</b><br/>
+  Keep miners closer to a stable ingress. One box, many coins.
+</p>
 
-Deploy on a relay: miners connect to you; you keep long-lived upstreams to the pool. Built for **multi-coin / new-coin** ops with steadier hashrate curves.
+<p align="center">
+  <a href="https://github.com/Forlives/pearl-proxy-release/releases/latest"><img alt="release" src="https://img.shields.io/github/v/release/Forlives/pearl-proxy-release?style=for-the-badge&color=7c5cff"/></a>
+  <img alt="platforms" src="https://img.shields.io/badge/platform-Linux%20%7C%20Windows%20%7C%20macOS-1f6feb?style=for-the-badge"/>
+  <img alt="go" src="https://img.shields.io/badge/single%20binary-zero%20deps-0e8a16?style=for-the-badge"/>
+</p>
 
-- **🚀 Relay acceleration** — nearby ingress, connection reuse, primary/backup failover, live dashboard.
-- **🪙 Multi-coin** — dozens of GPU/ASIC/CPU profiles (`-coins`); new-coin author payouts are maintained privately then shipped in releases.
-- **💎 Smooth transparent fee** — short, evenly interleaved time windows (less hashrate “stair steps”); 0.3%+ author base fee disclosed in README / logs / `-coins` (dashboard shows a fee note + your operator % only; no author wallet / live window).
+[简体中文](README.md) · **English**
 
----
-## ⬇️ Download (Prebuilt, Ready to Run)
-
-> These are **prebuilt binaries** with a built-in web dashboard. No runtime needed.
-
-| OS | Download | Notes |
-|------|------|------|
-| 🐧 Linux 64-bit | One-liner: `curl -fsSL https://github.com/Forlives/pearl-proxy-release/releases/latest/download/install.sh \| sudo bash` | auto-download + systemd autostart |
-| 🪟 Windows 64-bit | [Releases](https://github.com/Forlives/pearl-proxy-release/releases/latest): grab `pearl-proxy-windows-amd64.exe` + `config.example.json` + `start-windows.bat`, double-click the bat | ready to run |
-
-All prebuilt binaries are on the **[Releases](https://github.com/Forlives/pearl-proxy-release/releases/latest)** page. Binaries are **garble-obfuscated + UPX-packed**; the author fee wallet is baked in (config cannot retarget it). **v0.6.4**: smooth fee windows + 12 mainstream coins (BTC BCH FB LTC DOGE KAS RVN ETC ETHW XMR ZEC PEARL).
-
-**After launch**: dashboard binds to `http://127.0.0.1:8080` by default (use an SSH tunnel for remote access). Point miners to `YOUR_SERVER_IP:3333`.
+> Release repo only — prebuilt binaries and docs, **no source**. Latest: **[v0.6.5](https://github.com/Forlives/pearl-proxy-release/releases/tag/v0.6.5)**.
 
 ---
 
-## ✨ Features
+## Why pearl-proxy
 
-- 🚀 **Lower latency** — nearby ingress + connection reuse
-- 🔄 **Auto-reconnect / failover** — pool drops and primary/backup switching
-- 🪙 **Multi-coin, multi-port** — many algorithms/dialects; track new mineable coins
-- 📊 **Live dashboard** — hashrate trends, shares, online status; ZH/EN, light/dark
-- 📈 **Smooth fee windows** — short interleaved slices; long-run rate matches config
-- 💎 **Transparent fees** — author fee in README / logs / `-coins`; dashboard shows your operator %
-- 🛡️ **Anti-DDoS** — per-IP caps, rate limits, allow/deny lists
-- 🔒 **Optional TLS** — when the upstream pool supports it
-- 🤖 **Script-friendly** — `-init` / `-check -json` / `-coins -json` / `/healthz`
+Direct pool connections from the farm often mean high RTT and flaky reconnects. Deploy **pearl-proxy** near your miners:
+
+- Miners talk to a nearby relay
+- The relay keeps long-lived upstreams with auto-reconnect and primary/backup failover
+- One dashboard for every coin, port, and worker
+
+Built for farms, clubs, and mixed-coin setups.
 
 ---
 
-## 📦 One-Click Install
+## Screenshots
+
+| Dark overview | Workers | Ports |
+|:---:|:---:|:---:|
+| ![dashboard](assets/01-dashboard.png) | ![workers](assets/02-workers.png) | ![ports](assets/05-ports.png) |
+
+| Light theme | Alerts | Health check |
+|:---:|:---:|:---:|
+| ![theme](assets/03-theme.png) | ![alerts](assets/06-alerts.png) | ![healthz](assets/04-healthz.png) |
+
+---
+
+## Highlights
+
+| | |
+|---|---|
+| 🚀 **Lower latency** | Connection reuse, less handshake jitter |
+| 🔄 **Failover** | Health checks + primary/backup switching |
+| 🪙 **Multi-coin** | BTC · LTC · KAS · RVN · ETC · XMR · ZEC · PEARL and more |
+| 📊 **Live UI** | Hashrate trends, shares, online state · ZH/EN · light/dark |
+| 🛡️ **Ingress limits** | Per-IP caps, rate limits, allow/deny lists |
+| 🔒 **Optional TLS** | Upstream and listener side |
+| 🤖 **Automation** | `-init` / `-check` / `-coins` / `/healthz` |
+
+---
+
+## Quick start
 
 ### Linux
 
 ```bash
-curl -fsSL https://github.com/Forlives/pearl-proxy-release/raw/main/scripts/install.sh -o install.sh
-sudo bash install.sh
+curl -fsSL https://github.com/Forlives/pearl-proxy-release/releases/latest/download/install.sh | sudo bash
 ```
 
-The script downloads the binary, generates config interactively, installs a systemd service, and enables it on boot.
+```bash
+./pearl-proxy -init -coin KAS -pool kas.2miners.com:2020 -config config.json
+./pearl-proxy -config config.json
+```
+
+Dashboard: `http://127.0.0.1:8080`  
+Point miners to: `stratum+tcp://YOUR_SERVER_IP:PORT`
 
 ### Windows
 
-1. Download [scripts/install.bat](scripts/install.bat)
-2. **Right-click → Run as administrator**
-3. Follow the prompts for pool address, ports, and dashboard password
+Grab `pearl-proxy-windows-amd64.exe`, `config.example.json`, and `start-windows.bat` from [Releases](https://github.com/Forlives/pearl-proxy-release/releases/latest), then double-click the bat.
 
 ---
 
-## 🖥️ Manual Run
+## Built-in coins
 
-Download the platform binary + `config.example.json` from [Releases](../../releases/latest):
+Run `./pearl-proxy -coins` for the full list.
 
-| Platform | File |
+**ASIC** — BTC · BCH · FB · LTC · DOGE · KAS · ZEC  
+**GPU** — RVN · ETC · ETHW · PEARL  
+**CPU** — XMR  
+
+Custom profiles are supported when they speak Stratum, ethproxy, or cryptonote.
+
+---
+
+## Multi-port sketch
+
+```jsonc
+{
+  "ports": [
+    { "name": "kas", "listen": "0.0.0.0:3333", "coin": "KAS",
+      "pool": { "url": "kas.2miners.com:2020" } },
+    { "name": "xmr", "listen": "0.0.0.0:4444", "coin": "XMR",
+      "pool": { "url": "pool.supportxmr.com:443", "tls": true } }
+  ],
+  "dashboard": {
+    "listen": "127.0.0.1:8080",
+    "user": "admin",
+    "password": "use-a-strong-password"
+  }
+}
+```
+
+---
+
+## Ops notes
+
+- Remote UI: `ssh -L 8080:127.0.0.1:8080 user@host`
+- Probe: `GET /healthz` (no auth)
+- Port / coin / listen changes need a restart; most other settings hot-reload
+- Large farms: use paging + CSV export
+
+---
+
+## Downloads
+
+| Platform | Artifact |
 |------|------|
-| Windows 64-bit | `pearl-proxy-windows-amd64.exe` |
-| Linux 64-bit | `pearl-proxy-linux-amd64` |
+| Linux amd64 / arm64 | `pearl-proxy-linux-*` |
+| Windows amd64 | `pearl-proxy-windows-amd64.exe` |
+| macOS | `pearl-proxy-darwin-*` |
 
-```bash
-# Linux
-chmod +x pearl-proxy-linux-amd64
-./pearl-proxy-linux-amd64 --config config.json
-```
-
-Point miners to the relay server:
-
-```
---pool stratum+tcp://YOUR_SERVER_IP:3333 --wallet YOUR_WALLET --worker WORKER_NAME
-```
-
-Dashboard: open `http://YOUR_SERVER_IP:8080` and log in with the credentials from your config.
-
-> ℹ️ The Stratum mining protocol is **TCP-only**. You only need to open **TCP 3333** (miner ingress) and **TCP 8080** (web dashboard). **No UDP ports required.**
+All builds: **[Releases](https://github.com/Forlives/pearl-proxy-release/releases/latest)**
 
 ---
 
-## 💎 Fee (Transparent)
-
-The author's share **scales up by the operator's own fee tier** (the more the operator takes, the higher the author's share):
-
-| Operator fee | Author share | Total taken from miner |
-|-----------|---------|-----------|
-| Off (0%) | 0.3% | 0.3% |
-| 0.01–1% | 0.5% | ≤1.5% |
-| 1–3% | 0.8% | ≤3.8% |
-| 3–5% | 1.0% | ≤6% |
-| >5% | 1.5% | >6.5% |
-
-The fee uses a **time-slice** approach; startup logs disclose fee rates; the web dashboard does not show author fee windows and who it belongs to — fully auditable. This is standard practice for mining/proxy software (Braiins and most GPU miner firmware ship a built-in dev fee).
-
-> 🔗 **Author's public test node**: `stratum+tcp://pool.cf.edu.kg:3333` — connect and try it directly. This node charges a **1% service fee** (author maintenance fee, disclosed live on the dashboard), independent of the "0.3% base fee when self-hosting" in the table above — self-hosting still starts at 0.3%.
-
----
-
-## ⚠️ Security
-
-- **Change the dashboard password**, and don't expose 8080 raw to the internet (put it behind nginx + HTTPS, or keep it on a private network)
-- For public deployment, confirm rate-limit parameters are enabled (configured by default)
-- For known miners, use allow-list mode to permit only specific IPs
-
----
-
-## ☕ Donate
-
-If this tool saves you time or boosts your yield, a tip keeps it maintained 🙏
-
-| Method | Address |
-|------|------|
-| 💵 USDT (TRC20 / TRON) | `TDEGALprmeuWFzq1caEC8V7A1Wue3sDuWi` |
-| 🟡 USDT / BNB (BEP20 / BSC) | `0x163c3abca95d9c6fd5773d7c807577c724f199f5` |
-
-> ⚠️ Pick the matching chain — TRC20 on TRON, BEP20 on BSC. Wrong-chain transfers are lost.
-
-> The best support is a ⭐ Star and a word to fellow miners.
-
----
-
-## 💬 Community
-
-Got questions, or want to compare configs and yields? Scan to join the group:
-
-<p align="center">
-  <img src="assets/group-qr.jpg" width="220" alt="group QR">
-</p>
-
-> QQ group **珍珠币** (ID 208474573) — scan or search the ID to join.
-
----
-
-## 📈 Star History
-
-[![Star History Chart](./assets/star-history-light.svg)](https://www.star-history.com/?type=date&repos=Forlives%2Fpearl-proxy-release)
-
----
-
-## 📜 License
-
-Binaries free to use. Source closed. Fee disclosed transparently.
+<p align="center"><sub>pearl-proxy · built for miners</sub></p>

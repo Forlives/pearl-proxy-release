@@ -1,26 +1,26 @@
-# pearl-proxy
+# pearl-proxy — agent notes
 
-> 多币种矿池中转代理(Go 单二进制)。矿机 -> 本代理 -> 上游矿池。支持 stratum / ethproxy / cryptonote 三种方言,主备矿池切换,Web 面板与只读 JSON API。所有操作可非交互完成。
+Release binaries: https://github.com/Forlives/pearl-proxy-release/releases/latest
 
-完整说明见 AGENTS.md。
+## Non-interactive
 
-## 快速命令
-- 下载: https://github.com/Forlives/pearl-proxy-release/releases/latest (pearl-proxy-{linux-amd64,linux-arm64,windows-amd64.exe,darwin-amd64,darwin-arm64})
-- 币种列表: `pearl-proxy -coins -json`
-- 生成配置: `pearl-proxy -init -coin KAS -pool host:port [-backup h2:p2] [-listen 0.0.0.0:3333] [-dashboard-password X] [-api-token T] [-user-wallet W -user-fee 1] -config config.json`
-- 校验: `pearl-proxy -check -json -config config.json` (exit 0 ok / 1 error)
-- 启动: `pearl-proxy -config config.json`
-- 版本: `pearl-proxy -version -json`
+```bash
+pearl-proxy -coins [-json]
+pearl-proxy -init -coin KAS -pool host:port -config config.json
+pearl-proxy -check [-json] -config config.json   # exit 0/1
+pearl-proxy -config config.json
+pearl-proxy -version [-json]
+```
 
 ## HTTP
-- GET /healthz (no auth) -> {ok, version, ports[{name,coin,pool_up}]}; 200 healthy / 503 pool unreachable
-- GET /api/stats | /api/workers?limit&offset&q&port&state | /api/sessions?limit&offset&port | /api/pools | /api/alerts (Basic auth or Authorization: Bearer <dashboard.api_token>)
-- GET /api/workers.csv, /api/sessions.csv
-- POST /api/reload (Basic auth)
 
-## Docs
-- [AGENTS.md](AGENTS.md): 参数、配置字段、币种、API、排错
-- [README.md](README.md)
-- [config.multi.example.json](config.multi.example.json), [config.farm.example.json](config.farm.example.json)
-- [docs/DEPLOY.md](docs/DEPLOY.md)
-- 面板底部有一行开发者费用说明(详见 README);面板/API 不展示作者钱包与抽水窗口。
+- `GET /healthz` — no auth; `{ok, version, ports[{name,coin,pool_up}]}`
+- `GET /api/stats|workers|sessions|pools|alerts` — Basic or `Authorization: Bearer <api_token>`
+- `GET /api/workers.csv` / `/api/sessions.csv`
+- `POST /api/reload` — Basic auth
+
+## Dialects
+
+`stratum` · `ethproxy` · `cryptonote`
+
+Built-in coins: see `pearl-proxy -coins`. Custom profiles under `coins` in config.

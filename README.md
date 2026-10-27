@@ -1,159 +1,150 @@
-# pearl-proxy · 多币种矿池中转加速器
+# pearl-proxy
 
-**简体中文** | [English](README_EN.md)
+<p align="center">
+  <img src="assets/hero.jpg" alt="pearl-proxy" width="920"/>
+</p>
 
-> 本仓库为**发布仓库**,只提供编译好的可执行程序、一键安装脚本与使用说明,**不含源码**。当前最新版 **[v0.6.4](https://github.com/Forlives/pearl-proxy-release/releases/tag/v0.6.4)**。
+<p align="center">
+  <b>多币种矿池中转 · 就近接入 · 实时面板</b><br/>
+  让矿机连得更稳、延迟更低，一台服务器统一管多币种矿场。
+</p>
 
-部署在中转服务器上:矿机连你的服务器,服务器用长连接转发到上游矿池。面向**多币种 / 新币**集中接入,兼顾算力曲线稳定。
+<p align="center">
+  <a href="https://github.com/Forlives/pearl-proxy-release/releases/latest"><img alt="release" src="https://img.shields.io/github/v/release/Forlives/pearl-proxy-release?style=for-the-badge&color=7c5cff"/></a>
+  <img alt="platforms" src="https://img.shields.io/badge/platform-Linux%20%7C%20Windows%20%7C%20macOS-1f6feb?style=for-the-badge"/>
+  <img alt="go" src="https://img.shields.io/badge/single%20binary-zero%20deps-0e8a16?style=for-the-badge"/>
+</p>
 
-- **🚀 中转加速** — 就近接入 + 长连接复用 + 主备矿池自动切换,降低延迟、减少掉线;Web 面板统一查看算力、份额与在线状态。
-- **🪙 多币种** — 内置主流热门与少数新币档案(PEARL/BTC/KAS/RVN/ETC/XMR 等;完整列表见 `-coins`)(`-coins` 可列),按端口配置不同币种与矿池;新币作者收款地址在私有仓集中维护后发版。
-- **💎 平滑透明抽水** — 时间片抽水默认**短窗口均匀穿插**,避免整块切走造成矿池侧算力曲线大起大落;作者底费 0.3% 起(README / 启动日志 / `-coins` 披露;面板底部有开发者费用说明,不展示作者钱包与实时窗口),运营者可自抽并如实显示%。
+**简体中文** · [English](README_EN.md)
 
----
-## ⬇️ 直接下载(打包好的程序,开箱即用)
-
-> 以下是**编译好的成品程序**,内置 Web 管理面板,下载即用,无需安装任何运行环境。
-
-| 系统 | 下载 | 说明 |
-|------|------|------|
-| 🐧 Linux 64 位 | 一键: `curl -fsSL https://github.com/Forlives/pearl-proxy-release/releases/latest/download/install.sh \| sudo bash` | 自动下载 + systemd 开机自启 |
-| 🪟 Windows 64 位 | [Releases](https://github.com/Forlives/pearl-proxy-release/releases/latest) 下载 `pearl-proxy-windows-amd64.exe` + `config.example.json` + `start-windows.bat`,双击 bat | 开箱即用 |
-
-所有成品程序都在 **[Releases](https://github.com/Forlives/pearl-proxy-release/releases/latest)** 页,无需编译。二进制经 **garble 混淆 + UPX 加壳**,作者底费已内置锚定(配置无法篡改钱包)。v0.6.4：**平滑抽水窗口** + 仅保留 12 个有作者钱包的主流热门币。
-
-**运行后**:面板默认仅本机访问 `http://127.0.0.1:8080`(远程查看用 SSH 隧道),矿机指向 `你的服务器IP:3333` 即可。
+> 本仓库只提供**预编译程序**与使用说明，不含源码。最新版 **[v0.6.5](https://github.com/Forlives/pearl-proxy-release/releases/tag/v0.6.5)**。
 
 ---
 
-## 🤖 给 AI / 脚本使用
+## 为什么用它
 
-见 [AGENTS.md](AGENTS.md) / [llms.txt](llms.txt)。非交互:`-init -coin KAS -pool host:port`、`-check -json`(退出码 0/1)、`-coins -json`;免登录健康检查 `GET /healthz`。
+矿机直连远方矿池时，延迟高、掉线重连频繁。把 **pearl-proxy** 部署在靠近矿机的服务器上：
 
----
+- 矿机只连本地/机房中转
+- 中转与上游矿池保持长连接，自动重连与主备切换
+- 一个面板看清所有币种、端口、矿机状态
 
-## ✨ 特性
-
-- 🚀 **加速降延迟** — 就近接入 + 长连接复用,减少握手与抖动
-- 🔄 **自动重连 / 主备切换** — 矿池断线自动重连,主备池故障切换
-- 🪙 **多币种多端口** — 一站接入多种算法/方言;主打持续跟进可挖新币
-- 📊 **实时面板** — 算力趋势、份额、在线状态;支持中/英与浅/深色
-- 📈 **平滑抽水** — 短时间窗均匀穿插,降低算力曲线波动;长期比例收敛到设定值
-- 💎 **透明费用** — 作者底费披露于 README / 日志 / `-coins`;面板显示你配置的运营抽水%
-- 🛡️ **防 DDoS** — 每 IP 并发上限、连接限速、IP 黑白名单
-- 🔒 **TLS 可选** — 上游矿池支持时加密链路
-- 🤖 **脚本友好** — `-init` / `-check -json` / `-coins -json` / `/healthz`
+适合矿场、工作室与多币种混挖场景。
 
 ---
 
-## 📦 一键安装(交互式)
+## 界面预览
 
-复制下面一行命令,按提示填矿池地址、端口、面板密码,即可自动下载、配置、启动(Linux 还会装 systemd 守护、开机自启)。
+| 深色总览 | 矿机列表 | 端口总览 |
+|:---:|:---:|:---:|
+| ![dashboard](assets/01-dashboard.png) | ![workers](assets/02-workers.png) | ![ports](assets/05-ports.png) |
 
-### 🐧 Linux
+| 浅色主题 | 告警 | 健康检查 |
+|:---:|:---:|:---:|
+| ![theme](assets/03-theme.png) | ![alerts](assets/06-alerts.png) | ![healthz](assets/04-healthz.png) |
+
+---
+
+## 核心能力
+
+| | |
+|---|---|
+| 🚀 **就近加速** | 长连接复用，降低握手与抖动 |
+| 🔄 **自动容灾** | 主备矿池健康检查与故障切换 |
+| 🪙 **多币种多端口** | BTC / LTC / KAS / RVN / ETC / XMR / ZEC / PEARL 等主流档案 |
+| 📊 **实时面板** | 算力趋势、份额、在线状态；中英双语、深浅色 |
+| 🛡️ **接入防护** | 每 IP 并发与速率限制、黑白名单 |
+| 🔒 **可选 TLS** | 上游与接入侧均可加密 |
+| 🤖 **脚本友好** | `-init` / `-check` / `-coins` / `/healthz` |
+
+---
+
+## 一分钟上手
+
+### Linux（推荐）
 
 ```bash
-bash <(curl -fsSL https://raw.githubusercontent.com/Forlives/pearl-proxy-release/main/scripts/install.sh)
+curl -fsSL https://github.com/Forlives/pearl-proxy-release/releases/latest/download/install.sh | sudo bash
 ```
 
-### 🪟 Windows(PowerShell)
+安装后按提示生成配置，或手动：
 
-```powershell
-irm https://raw.githubusercontent.com/Forlives/pearl-proxy-release/main/scripts/install.ps1 | iex
+```bash
+./pearl-proxy -init -coin KAS -pool kas.2miners.com:2020 -config config.json
+./pearl-proxy -config config.json
 ```
 
-> 全程中文交互:依次询问安装目录、矿池地址、面板端口与密码、是否开启你自己的抽水,最后可一键启动。
+面板默认：`http://127.0.0.1:8080`  
+矿机指向：`stratum+tcp://服务器IP:端口`
+
+### Windows
+
+1. 打开 [Releases](https://github.com/Forlives/pearl-proxy-release/releases/latest)
+2. 下载 `pearl-proxy-windows-amd64.exe`、`config.example.json`、`start-windows.bat`
+3. 双击 `start-windows.bat`
 
 ---
 
-## 🖥️ 手动运行
+## 支持的主流币种
 
-从 [Releases](../../releases/latest) 下载对应平台二进制 + `config.example.json`:
+运行 `./pearl-proxy -coins` 查看完整列表。内置档案覆盖：
+
+**ASIC** — BTC · BCH · FB · LTC · DOGE · KAS · ZEC  
+**GPU** — RVN · ETC · ETHW · PEARL  
+**CPU** — XMR  
+
+其它币种可在配置里用自定义 `coins` 档案接入（需兼容 Stratum / ethproxy / cryptonote 之一）。
+
+---
+
+## 多端口示例
+
+```jsonc
+{
+  "ports": [
+    { "name": "kas", "listen": "0.0.0.0:3333", "coin": "KAS",
+      "pool": { "url": "kas.2miners.com:2020" } },
+    { "name": "xmr", "listen": "0.0.0.0:4444", "coin": "XMR",
+      "pool": { "url": "pool.supportxmr.com:443", "tls": true } },
+    { "name": "rvn", "listen": "0.0.0.0:5555", "coin": "RVN",
+      "pool": { "url": "rvn.2miners.com:6060" },
+      "backup_pools": [ { "url": "备用矿池:端口" } ] }
+  ],
+  "dashboard": {
+    "listen": "127.0.0.1:8080",
+    "user": "admin",
+    "password": "改成你的强密码"
+  }
+}
+```
+
+完整模板见发布包内的 `config.example.json` / `config.multi.example.json`。
+
+---
+
+## 运维小贴士
+
+- 远程看面板：用 SSH 隧道 `ssh -L 8080:127.0.0.1:8080 user@服务器`
+- 健康探针：`GET /healthz`（免登录）
+- 改端口 / 币种 / 监听地址后需要重启；其它多数配置支持热重载
+- 大矿场请用面板分页与 CSV 导出
+
+---
+
+## 下载
+
+所有平台成品均在 **[Releases](https://github.com/Forlives/pearl-proxy-release/releases/latest)**：
 
 | 平台 | 文件 |
 |------|------|
-| Windows 64 位 | `pearl-proxy-windows-amd64.exe` |
-| Linux 64 位 | `pearl-proxy-linux-amd64` |
-
-```bash
-# Linux
-chmod +x pearl-proxy-linux-amd64
-./pearl-proxy-linux-amd64 --config config.json
-```
-
-矿机指向中转服务器:
-
-```
---pool stratum+tcp://你的服务器IP:3333 --wallet 你的钱包 --worker 矿机名
-```
-
-面板:浏览器打开 `http://你的服务器IP:8080`,输入配置里的用户名密码。
-
-> ℹ️ Stratum 挖矿协议为**纯 TCP**,只需放行 **TCP 3333**(矿机接入)与 **TCP 8080**(Web 面板),**无需开放 UDP 端口**。
+| Linux amd64 / arm64 | `pearl-proxy-linux-amd64` · `pearl-proxy-linux-arm64` |
+| Windows amd64 | `pearl-proxy-windows-amd64.exe` |
+| macOS Intel / Apple Silicon | `pearl-proxy-darwin-amd64` · `pearl-proxy-darwin-arm64` |
 
 ---
 
-## 💎 抽水说明(透明)
+## 许可与反馈
 
-作者分成按运营者自抽档位**阶梯递增**(抽得越多,作者分成越高):
+Issues / Discussions 欢迎提交。商用部署请自行评估上游矿池条款与当地合规要求。
 
-| 运营者自抽 | 作者分成 | 矿机总被抽 |
-|-----------|---------|-----------|
-| 不开(0%) | 0.3% | 0.3% |
-| 0.01–1% | 0.5% | ≤1.5% |
-| 1–3% | 0.8% | ≤3.8% |
-| 3–5% | 1.0% | ≤6% |
-| >5% | 1.5% | >6.5% |
-
-抽水采用**时间片**方式,比例在本 README、启动日志与 `-coins` 中披露,Web 面板底部也有一行开发者费用说明(面板不显示作者钱包和实时抽水窗口)。这是矿机 / 代理软件的行业通用做法(Braiins、各 GPU 矿机固件均内置 dev fee)。
-
-> 🔗 **作者公开测试节点**:`stratum+tcp://pool.cf.edu.kg:3333`,可直接连上试跑。该节点对外收取 **1% 服务费**(作者维护费,已在面板公开),与上表「自建部署默认 0.3% 底费」相互独立 —— 自己部署仍是 0.3% 起。
-
----
-
-## ⚠️ 安全建议
-
-- **面板密码务必修改**,8080 不要裸暴露公网(建议套 nginx + HTTPS 或仅内网访问)
-- 公网部署确认限速参数已开启(默认已配置)
-- 已知矿机可用白名单模式,只放行指定 IP
-
----
-
-## ☕ 打赏支持
-
-如果这个工具帮你省了心、提了收益,欢迎打赏支持作者持续维护更新 🙏
-
-| 方式 | 地址 |
-|------|------|
-| 💵 USDT (TRC20 / 波场) | `TDEGALprmeuWFzq1caEC8V7A1Wue3sDuWi` |
-| 🟡 USDT / BNB (BEP20 / BSC) | `0x163c3abca95d9c6fd5773d7c807577c724f199f5` |
-
-> ⚠️ 转账请认准对应链:TRC20 走波场(TRON),BEP20 走币安智能链(BSC),勿跨链转账以免丢币。
-
-> 最好的支持是点一个 ⭐ Star + 推荐给身边的矿工。
-
----
-
-## 💬 交流群
-
-遇到问题、想交流配置和收益,欢迎扫码进群:
-
-<p align="center">
-  <img src="assets/group-qr.jpg" width="220" alt="交流群二维码">
-</p>
-
-> QQ 群:**珍珠币**(群号 208474573)· 扫码或搜群号加入。
-
----
-
-## 📈 Star 趋势
-
-<a href="https://star-history.com/#Forlives/pearl-proxy-release&Date">
-  <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=Forlives/pearl-proxy-release&type=Date" width="600" />
-</a>
-
----
-
-## 📜 协议
-
-可执行文件免费供使用。源码闭源。抽水比例已公开披露。
+<p align="center"><sub>pearl-proxy · built for miners</sub></p>
