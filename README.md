@@ -17,7 +17,7 @@
 
 **简体中文** · [English](README_EN.md)
 
-> 本仓库只提供**预编译程序**与使用说明，不含源码。最新版 **[v0.6.5](https://github.com/Forlives/pearl-proxy-release/releases/tag/v0.6.5)**。
+> 本仓库只提供**预编译程序**与使用说明，不含源码。最新版 **[v0.6.6](https://github.com/Forlives/pearl-proxy-release/releases/tag/v0.6.6)**。
 
 ---
 
@@ -55,6 +55,7 @@
 | 📊 **实时面板** | 算力趋势、份额、在线状态；中英双语、深浅色 |
 | 🛡️ **接入防护** | 每 IP 并发与速率限制、黑白名单 |
 | 🔒 **可选 TLS** | 上游与接入侧均可加密 |
+| 🧭 **一键接入** | 面板 `/setup` 选币种与矿池，复制矿机连接串 |
 | 🤖 **脚本友好** | `-init` / `-check` / `-coins` / `/healthz` |
 
 ---
@@ -148,3 +149,17 @@ curl -fsSL https://github.com/Forlives/pearl-proxy-release/releases/latest/downl
 Issues / Discussions 欢迎提交。商用部署请自行评估上游矿池条款与当地合规要求。
 
 <p align="center"><sub>pearl-proxy · built for miners</sub></p>
+
+---
+
+## 一键接入
+
+打开面板后点 **接入向导**（或直接访问 `/setup`）：
+
+1. 选择要开的币种  
+2. 挑选热门矿池，或填写自定义 `host:port`  
+3. 填入矿工访问用的公网 IP / 域名，一键复制 `stratum+tcp://你的IP:端口`  
+4. 需要的话再复制生成的多端口 `config.json` 片段
+
+
+

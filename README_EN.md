@@ -17,7 +17,7 @@
 
 [简体中文](README.md) · **English**
 
-> Release repo only — prebuilt binaries and docs, **no source**. Latest: **[v0.6.5](https://github.com/Forlives/pearl-proxy-release/releases/tag/v0.6.5)**.
+> Release repo only — prebuilt binaries and docs, **no source**. Latest: **[v0.6.6](https://github.com/Forlives/pearl-proxy-release/releases/tag/v0.6.6)**.
 
 ---
 
@@ -55,9 +55,24 @@ Built for farms, clubs, and mixed-coin setups.
 | 📊 **Live UI** | Hashrate trends, shares, online state · ZH/EN · light/dark |
 | 🛡️ **Ingress limits** | Per-IP caps, rate limits, allow/deny lists |
 | 🔒 **Optional TLS** | Upstream and listener side |
+| 🧭 **One-click setup** | Dashboard `/setup` — pick coin & pool, copy miner URLs |
 | 🤖 **Automation** | `-init` / `-check` / `-coins` / `/healthz` |
 
 ---
+
+
+---
+
+## One-click setup
+
+Open the dashboard and click **Setup** (or go to `/setup`):
+
+1. Pick the coins you want  
+2. Choose a popular pool, or enter a custom `host:port`  
+3. Set the public IP/hostname miners will use, then copy `stratum+tcp://YOUR_IP:PORT`  
+4. Optionally copy the generated multi-port `config.json` snippet
+
+
 
 ## Quick start
 
