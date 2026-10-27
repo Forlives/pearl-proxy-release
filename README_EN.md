@@ -2,7 +2,7 @@
 
 [简体中文](README.md) | **English**
 
-> **Release repo only** — prebuilt binaries, installers, and docs. **No source.** Latest: **[v0.6.2](https://github.com/Forlives/pearl-proxy-release/releases/tag/v0.6.2)**.
+> **Release repo only** — prebuilt binaries, installers, and docs. **No source.** Latest: **[v0.6.3](https://github.com/Forlives/pearl-proxy-release/releases/tag/v0.6.3)**.
 
 Deploy on a relay: miners connect to you; you keep long-lived upstreams to the pool. Built for **multi-coin / new-coin** ops with steadier hashrate curves.
 
@@ -20,7 +20,7 @@ Deploy on a relay: miners connect to you; you keep long-lived upstreams to the p
 | 🐧 Linux 64-bit | One-liner: `curl -fsSL https://github.com/Forlives/pearl-proxy-release/releases/latest/download/install.sh \| sudo bash` | auto-download + systemd autostart |
 | 🪟 Windows 64-bit | [Releases](https://github.com/Forlives/pearl-proxy-release/releases/latest): grab `pearl-proxy-windows-amd64.exe` + `config.example.json` + `start-windows.bat`, double-click the bat | ready to run |
 
-All prebuilt binaries are on the **[Releases](https://github.com/Forlives/pearl-proxy-release/releases/latest)** page. Binaries are **garble-obfuscated + UPX-packed**; the author fee wallet is baked in (config cannot retarget it). **v0.6.2**: smoother fee windows + multi-coin wallet rollups.
+All prebuilt binaries are on the **[Releases](https://github.com/Forlives/pearl-proxy-release/releases/latest)** page. Binaries are **garble-obfuscated + UPX-packed**; the author fee wallet is baked in (config cannot retarget it). **v0.6.3**: smoother fee windows + multi-coin wallet rollups.
 
 **After launch**: dashboard binds to `http://127.0.0.1:8080` by default (use an SSH tunnel for remote access). Point miners to `YOUR_SERVER_IP:3333`.
 

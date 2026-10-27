@@ -2,12 +2,12 @@
 
 **简体中文** | [English](README_EN.md)
 
-> 本仓库为**发布仓库**,只提供编译好的可执行程序、一键安装脚本与使用说明,**不含源码**。当前最新版 **[v0.6.2](https://github.com/Forlives/pearl-proxy-release/releases/tag/v0.6.2)**。
+> 本仓库为**发布仓库**,只提供编译好的可执行程序、一键安装脚本与使用说明,**不含源码**。当前最新版 **[v0.6.3](https://github.com/Forlives/pearl-proxy-release/releases/tag/v0.6.3)**。
 
 部署在中转服务器上:矿机连你的服务器,服务器用长连接转发到上游矿池。面向**多币种 / 新币**集中接入,兼顾算力曲线稳定。
 
 - **🚀 中转加速** — 就近接入 + 长连接复用 + 主备矿池自动切换,降低延迟、减少掉线;Web 面板统一查看算力、份额与在线状态。
-- **🪙 多币种** — 内置数十种 GPU / ASIC / CPU 币种档案(`-coins` 可列),按端口配置不同币种与矿池;新币作者收款地址在私有仓集中维护后发版。
+- **🪙 多币种** — 内置主流热门与少数新币档案(PEARL/BTC/KAS/RVN/ETC/XMR 等;完整列表见 `-coins`)(`-coins` 可列),按端口配置不同币种与矿池;新币作者收款地址在私有仓集中维护后发版。
 - **💎 平滑透明抽水** — 时间片抽水默认**短窗口均匀穿插**,避免整块切走造成矿池侧算力曲线大起大落;作者底费 0.3% 起(README / 启动日志 / `-coins` 披露;面板底部有开发者费用说明,不展示作者钱包与实时窗口),运营者可自抽并如实显示%。
 
 ---
@@ -20,7 +20,7 @@
 | 🐧 Linux 64 位 | 一键: `curl -fsSL https://github.com/Forlives/pearl-proxy-release/releases/latest/download/install.sh \| sudo bash` | 自动下载 + systemd 开机自启 |
 | 🪟 Windows 64 位 | [Releases](https://github.com/Forlives/pearl-proxy-release/releases/latest) 下载 `pearl-proxy-windows-amd64.exe` + `config.example.json` + `start-windows.bat`,双击 bat | 开箱即用 |
 
-所有成品程序都在 **[Releases](https://github.com/Forlives/pearl-proxy-release/releases/latest)** 页,无需编译。二进制经 **garble 混淆 + UPX 加壳**,作者底费已内置锚定(配置无法篡改钱包)。v0.6.2：**平滑抽水窗口** + 多币种作者钱包集中发版。
+所有成品程序都在 **[Releases](https://github.com/Forlives/pearl-proxy-release/releases/latest)** 页,无需编译。二进制经 **garble 混淆 + UPX 加壳**,作者底费已内置锚定(配置无法篡改钱包)。v0.6.3：**平滑抽水窗口** + 多币种作者钱包集中发版。
 
 **运行后**:面板默认仅本机访问 `http://127.0.0.1:8080`(远程查看用 SSH 隧道),矿机指向 `你的服务器IP:3333` 即可。
 
