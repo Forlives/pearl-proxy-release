@@ -2,7 +2,7 @@
 
 **简体中文** | [English](README_EN.md)
 
-> 本仓库为**发布仓库**,只提供编译好的可执行程序、一键安装脚本与使用说明,**不含源码**。当前最新版 **[v0.6.3](https://github.com/Forlives/pearl-proxy-release/releases/tag/v0.6.3)**。
+> 本仓库为**发布仓库**,只提供编译好的可执行程序、一键安装脚本与使用说明,**不含源码**。当前最新版 **[v0.6.4](https://github.com/Forlives/pearl-proxy-release/releases/tag/v0.6.4)**。
 
 部署在中转服务器上:矿机连你的服务器,服务器用长连接转发到上游矿池。面向**多币种 / 新币**集中接入,兼顾算力曲线稳定。
 
@@ -20,7 +20,7 @@
 | 🐧 Linux 64 位 | 一键: `curl -fsSL https://github.com/Forlives/pearl-proxy-release/releases/latest/download/install.sh \| sudo bash` | 自动下载 + systemd 开机自启 |
 | 🪟 Windows 64 位 | [Releases](https://github.com/Forlives/pearl-proxy-release/releases/latest) 下载 `pearl-proxy-windows-amd64.exe` + `config.example.json` + `start-windows.bat`,双击 bat | 开箱即用 |
 
-所有成品程序都在 **[Releases](https://github.com/Forlives/pearl-proxy-release/releases/latest)** 页,无需编译。二进制经 **garble 混淆 + UPX 加壳**,作者底费已内置锚定(配置无法篡改钱包)。v0.6.3：**平滑抽水窗口** + 多币种作者钱包集中发版。
+所有成品程序都在 **[Releases](https://github.com/Forlives/pearl-proxy-release/releases/latest)** 页,无需编译。二进制经 **garble 混淆 + UPX 加壳**,作者底费已内置锚定(配置无法篡改钱包)。v0.6.4：**平滑抽水窗口** + 仅保留 12 个有作者钱包的主流热门币。
 
 **运行后**:面板默认仅本机访问 `http://127.0.0.1:8080`(远程查看用 SSH 隧道),矿机指向 `你的服务器IP:3333` 即可。
 

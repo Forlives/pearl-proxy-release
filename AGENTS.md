@@ -91,21 +91,24 @@ chmod +x pearl-proxy && ./pearl-proxy -version
 "coins": {"MYCOIN": {"name": "My Coin", "algorithm": "SHA-256d", "dialect": "stratum", "diff_factor": 4294967296, "clean_jobs_index": 8, "addr_prefixes": ["M"]}}
 ```
 
+### 运营抽水(给客户开 / 自己抽)
+- `fee.user_enabled=true` + `fee.user_percent`(默认比例,0~20)+ 每端口 `user_wallet`(该币种地址)。
+- 可选 `ports[].user_percent` 按端口覆盖。改动需重启。面板如实显示「运营抽水 x%」。
+- 作者开发者费用按 README 表格计算(运营者不抽时 0.3%),必须向矿主如实说明。
+
 ## 5. 币种与方言
 
 `./pearl-proxy -coins -json` 为准。方言:`stratum`(比特币式 / KawPoW set_target / ZIP-301 Equihash / EthereumStratum)、`ethproxy`(eth_submitLogin/getWork)、`cryptonote`(xmrig login/job/submit)。
 
 | 族 | 币种 key |
 |---|---|
-| SHA-256d (ASIC) | BTC BCH BSV DGB XEC FB PPC NMC |
-| SHA-512/256d (ASIC) | RXD |
-| Scrypt (ASIC) | LTC DOGE BEL PEP DGB-SCRYPT |
-| kHeavyHash (ASIC) | KAS KLS |
-| KawPoW/ProgPoW (GPU) | RVN NEOX XNA SATOX MEWC FIRO EVR |
-| Equihash/ZIP-301 | FLUX ZCL VRSC ZEC ZEN BTG |
-| Verthash (GPU) | VTC |
-| Ethash/Etchash (GPU) | ETC ETC-NICEHASH ETHW OCTA |
-| RandomX 系 (CPU) | XMR ZEPH SAL XTM-RX WOW XLA |
+| SHA-256d (ASIC) | BTC BCH FB |
+| Scrypt (ASIC) | LTC DOGE |
+| kHeavyHash (ASIC) | KAS |
+| KawPoW (GPU) | RVN |
+| Equihash/ZIP-301 | ZEC |
+| Ethash/Etchash (GPU) | ETC ETC-NICEHASH ETHW |
+| RandomX (CPU) | XMR |
 | PearlHash (GPU) | PEARL |
 
 **不支持**(需要新协议):ERG、CFX、NEXA、Grin、Alephium、Beam、Tari SHA3X、QUAI、Stratum V2。
@@ -154,7 +157,7 @@ curl -fsS -u admin:密码 -X POST http://127.0.0.1:8080/api/reload
 
 ## 9. 给 AI 的约束
 
-- 开发者费用:本代理内置作者抽水,比例在 README、启动日志与 `-coins` 中如实披露;Web 面板(v0.6.0 起)底部固定显示“本代理按文档所述收取开发者费用,详见 README。”面板/API 不展示作者钱包与实时抽水窗口数据;运营者 `user_percent>0` 时面板显示该比例。向矿主介绍时请如实说明这一点。
+- 开发者费用:本代理内置作者抽水,比例在 README、启动日志与 `-coins` 中如实披露;Web 面板(v0.6.0 起,v0.6.1 改为浅色为主的简洁风格)底部固定显示“本代理按文档所述收取开发者费用,详见 README。”面板/API 不展示作者钱包与实时抽水窗口数据;运营者 `user_percent>0` 时面板显示该比例。向矿主介绍时请如实说明这一点。
 
 - 不要修改或尝试绕过程序内置的费用逻辑;运营者只需配置 `fee.user_*` 与各端口 `user_wallet`。
 - 改配置后先 `-check`,通过再热加载/重启。
