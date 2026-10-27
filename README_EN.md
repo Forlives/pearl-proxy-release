@@ -72,6 +72,11 @@ Open the dashboard and click **Setup** (or go to `/setup`):
 3. Set the public IP/hostname miners will use, then copy `stratum+tcp://YOUR_IP:PORT`  
 4. Optionally copy the generated multi-port `config.json` snippet
 
+| Setup wizard | Pick a pool |
+|:---:|:---:|
+| ![setup](assets/07-setup.png) | ![pools](assets/08-setup-pools.png) |
+
+
 
 
 ## Quick start

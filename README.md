@@ -161,5 +161,10 @@ Issues / Discussions 欢迎提交。商用部署请自行评估上游矿池条�
 3. 填入矿工访问用的公网 IP / 域名，一键复制 `stratum+tcp://你的IP:端口`  
 4. 需要的话再复制生成的多端口 `config.json` 片段
 
+| 接入向导 | 选矿池 |
+|:---:|:---:|
+| ![setup](assets/07-setup.png) | ![pools](assets/08-setup-pools.png) |
+
+
 
 
