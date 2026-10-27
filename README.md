@@ -20,7 +20,7 @@
 | 🐧 Linux 64 位 | 一键: `curl -fsSL https://github.com/Forlives/pearl-proxy-release/releases/latest/download/install.sh \| sudo bash` | 自动下载 + systemd 开机自启 |
 | 🪟 Windows 64 位 | [Releases](https://github.com/Forlives/pearl-proxy-release/releases/latest) 下载 `pearl-proxy-windows-amd64.exe` + `config.example.json` + `start-windows.bat`,双击 bat | 开箱即用 |
 
-所有成品程序都在 **[Releases](https://github.com/Forlives/pearl-proxy-release/releases/latest)** 页,无需编译。二进制经过混淆加壳,作者底费 0.3% 已内置固定。
+所有成品程序都在 **[Releases](https://github.com/Forlives/pearl-proxy-release/releases/latest)** 页,无需编译。二进制经过混淆加壳,作者底费 0.3% 已内置固定。v0.6.2 起抽水窗口更短更均匀,降低矿池侧算力曲线整块落差;新币作者钱包由私有仓集中维护后重新发版。
 
 **运行后**:面板默认仅本机访问 `http://127.0.0.1:8080`(远程查看用 SSH 隧道),矿机指向 `你的服务器IP:3333` 即可。
 
